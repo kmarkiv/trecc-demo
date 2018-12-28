@@ -23,8 +23,8 @@ def get_child_unit(user_id):
     return unit_id
 
 
-def get_struggling_question_type_for_unit(user_id, unit_id):
-    # get struggling question_type
+def get_difficult_question_type_for_unit(user_id, unit_id):
+    # get difficult question_type
 
     conn = get_db()
 
@@ -38,7 +38,7 @@ def get_struggling_question_type_for_unit(user_id, unit_id):
     # return most difficult question type
     if DEBUG:
         print "Question_Type Scores", units
-        print "Struggling Question_Type = ", units[0][0]
+        print "Difficult Question_Type = ", units[0][0]
     return units[0][0]
 
 
@@ -54,7 +54,7 @@ def lesson_support_struggle():
     # debug user id
     UNIT_ID = get_child_unit(USER_ID)
 
-    QUESTION_TYPE_ID = get_struggling_question_type_for_unit(USER_ID, UNIT_ID)
+    QUESTION_TYPE_ID = get_difficult_question_type_for_unit(USER_ID, UNIT_ID)
 
     play("QUESTION_SUMMARY_UNIT_%s_QUESTION_TYPE_%s" % (UNIT_ID, QUESTION_TYPE_ID))
     play("EXAMPLE_QUESTION_TYPE_UNIT_%s_QUESTION_TYPE_%s" % (UNIT_ID, QUESTION_TYPE_ID))
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
 CURRENT UNIT =  4
 Question_Type Scores [(3, 0.2), (4, 0.3333333333333333), (7, 0.6), (5, 0.8)]
-Struggling Question_Type =  3
+Difficult Question_Type =  3
 playing message ...  QUESTION_SUMMARY_UNIT_4_QUESTION_TYPE_3
 playing message ...  EXAMPLE_QUESTION_TYPE_UNIT_4_QUESTION_TYPE_3
 playing message ...  HINT_UNIT_4_QUESTION_TYPE_3
