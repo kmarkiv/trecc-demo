@@ -1,8 +1,6 @@
 # trecc-demo
 Pseudo code for Trecc IVR flows
 
-Installation
 
-
-Running
+## Running
 python parent_call_demo.py
