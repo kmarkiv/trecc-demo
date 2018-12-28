@@ -1,0 +1,10 @@
+# add view to sqlite
+# and excel
+# connect to tokens
+
+# progress updates
+# call frequency
+# call threshold
+
+## lesson support option
+# find child unit
