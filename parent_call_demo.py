@@ -57,15 +57,24 @@ def head(message):
     print message
     print "##" * 20
 
-def play(message):
+def play(message,table = None):
+    # plays content from spreadsheet
+    # "Allo Alphabet Content List (January 2019)" (search on drive)
     conn = get_content_db()
-    conn.execute("SELECT * FROM parents WHERE ContentID='%s' " % message)
+
+
+    COLUMN = 2
+    # Defaults to parents_support
+    if not table:
+        table = "parents_support"
+        COLUMN = 6
+    conn.execute("SELECT * FROM %s WHERE ContentID='%s' " % (table,message))
     data = conn.fetchone()
     debug("CONTENTID %s"%message)
     debug(data)
     debug("playing message ... %s "%message)
     if data:
-        print "  ",data[6]
+        print "  ",data[COLUMN]
     else:
         print " PLAY (%s)" % message
     print " "
@@ -76,12 +85,18 @@ def lesson_support_options_difficult():
     UNIT_ID = get_child_unit(USER_ID)
     QUESTION_TYPE_ID = get_difficult_question_type_for_unit(USER_ID, UNIT_ID)
 
+    # QUESTIONSUMMARY_(UNIT_ID)_(QUESTION_TYPE)
     play("QuestionSummary_%s_%s" % (UNIT_ID, QUESTION_TYPE_ID))
 
-    # play from Syllabus
-    play("EXAMPLE_QUESTION_TYPE_UNIT_%s_QUESTION_TYPE_%s" % (UNIT_ID, QUESTION_TYPE_ID))
-    # play from Syllabus
-    play("HINT_UNIT_%s_QUESTION_TYPE_%s" % (UNIT_ID, QUESTION_TYPE_ID))
+    # play KEY from Syllabus
+    # "EXAMPLE_QUESTION_(UNIT_ID)_(QUESTION_TYPE)
+    # @todo key is only for demo purposes
+    play("LessonExplanation_%s_%s" % (UNIT_ID, QUESTION_TYPE_ID),"core_product")
+
+    # play KEY from Syllabus
+    # HINT_(UNIT_ID)_(QUESTION_TYPE)
+    # @todo key is only for demo purposes
+    play("Hint_%s_%s" % (UNIT_ID, QUESTION_TYPE_ID),"core_product")
 
 
 def lesson_support_options_suggestion():
