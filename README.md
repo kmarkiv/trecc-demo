@@ -3,7 +3,7 @@ Pseudo code for Parent Flow
 
 
 ## To run
-python parent_call_demo.py
+python [https://github.com/kmarkiv/trecc-demo/blob/master/parent_call_demo.py](parent_call_demo.py)
 
 
 
