@@ -10,7 +10,7 @@ USER_ID = 4
 dirs = [""]
 FILE_PATH = "/Users/vkamath/Downloads/Fabrice/Tokens_All/"
 
-CORRECT_FILE_PATH = "/Users/vkamath/Downloads/Tokens_Clean/"
+CORRECT_FILE_PATH = "/Users/vkamath/Downloads/Tokens_Clean2/"
 
 
 def get_db():
@@ -33,7 +33,7 @@ def debug(message):
 
 
 def copy_file(file_path, new_file_path):
-    new_file_path.replace(" ","")
+    new_file_path.replace(" ", "")
     correct_file_path = FILE_PATH + file_path + ".wav"
     new_file_path = CORRECT_FILE_PATH + new_file_path + ".wav"
     import os.path
@@ -85,16 +85,16 @@ def update_content_data():
     rows = conn.fetchall()
     for row in rows:
         # print row
-            if check_file(dirs[0] + row[0]):
-                update_content_info(conn, row[0])
-                c.commit()
-                file = get_file_name(row[0])
-                #print file, row[0]
-                if file:
-                    copy_file(row[0], file)
-                else:
-                    print "Error",row[0]
-                    print "==============================="
+        if check_file(dirs[0] + row[0]):
+            update_content_info(conn, row[0])
+            c.commit()
+            file = get_file_name(row[0])
+            # print file, row[0]
+            if file:
+                copy_file(row[0], file)
+            else:
+                print "Error", row[0]
+                print "==============================="
 
     return True
 
@@ -123,16 +123,17 @@ def check_directory():
     for file in f:
         conn, c = get_db()
         c.text_factory = str
-        #conn.decode('utf8')
+        # conn.decode('utf8')
 
         # table mirrors metabase users_to_units table
-        token = file.replace(".wav","")
-        conn.execute("SELECT Phonetics, Recorded,ID FROM tokens WHERE Phonetics=?",(token,))
+        file = file.trim()
+        token = file.replace(".wav", "")
+        conn.execute("SELECT Phonetics, Recorded,ID FROM tokens WHERE Phonetics=?", (token,))
 
         rows = conn.fetchone()
         # print rows
         if not rows:
-            print token," ERROR"
+            print token, " ERROR"
 
     return 0
 
@@ -141,4 +142,4 @@ if __name__ == "__main__":
     clear_content_info()
     update_content_data()
     get_stats()
-    #check_directory()
+    # check_directory()
